@@ -1,6 +1,7 @@
 import glob
 import os
 import hashlib
+import database
 
 
 class Packet:
@@ -54,4 +55,7 @@ if __name__ == '__main__':
     for file in files:
         file_list.append(file)
     for k in file_list:
-        print(f"{k}: " + md5(k))
+        # TODO: Delete line below once we know the database connection is working properly
+        # print(f"{k}: " + md5(k))
+        database.db.execute(f"INSERT INTO hashes (object, hash) VALUES ('{k}', '{md5(k)}')")
+        database.db.commit()
